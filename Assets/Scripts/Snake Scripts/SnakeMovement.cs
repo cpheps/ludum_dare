@@ -17,7 +17,7 @@ public class SnakeMovement : MonoBehaviour {
 		newSegment.transform.SetParent(transform);
 
 		//Set new segment position
-		newSegment.transform.localPosition = lastSegment.localPosition - new Vector3(0, 0, 0.25f);
+		newSegment.transform.localPosition = lastSegment.localPosition - new Vector3(0, 0, 1);
 		newSegment.transform.localRotation = lastSegment.localRotation;
 
 		snakeSegments.Add(newSegment.transform);
@@ -58,7 +58,7 @@ public class SnakeMovement : MonoBehaviour {
 
 			Vector3 lastSegmentPosition = snakeSegment.localPosition;
 
-			snakeSegment.localPosition = nextPosition - new Vector3(0, 0, 0.25f);
+			snakeSegment.localPosition = nextPosition - new Vector3(0, 0, 1);
 
 			nextPosition = lastSegmentPosition;
 		}
