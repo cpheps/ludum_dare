@@ -5,10 +5,10 @@ public class Pellet : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collider)
 	{
+		Debug.Log(collider.name);
 		if (collider.tag == "Snake Head")
 		{
-			SnakeHeadMovement snakeHeadMovement = collider.transform.GetComponent<SnakeHeadMovement>();
-			snakeHeadMovement.Grow();
+			collider.transform.SendMessageUpwards("addSegment");
 			Destroy(gameObject);
 		}
 	}
