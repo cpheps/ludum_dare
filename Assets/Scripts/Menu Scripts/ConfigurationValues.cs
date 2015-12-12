@@ -8,7 +8,6 @@ public class ConfigurationValues : MonoBehaviour {
 	public string configKey;
 
 	void Start () {
-
 		Char[] splitChars = {'='};
 		string[] lines = File.ReadAllLines("Assets/controls.txt");
 		foreach (string s in lines)
