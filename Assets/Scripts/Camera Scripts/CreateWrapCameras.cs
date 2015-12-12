@@ -6,12 +6,6 @@ public class CreateWrapCameras : MonoBehaviour
 
 	public GameObject wrapCam;
 
-	private Vector3 horizontalOffset;
-	private Vector3 verticalOffset;
-	private Vector3 zOffset;
-
-	private int oldScreenWidth;
-	private int oldScreenHeight;
 
 	// Use this for initialization
 	void Start ()
@@ -21,7 +15,7 @@ public class CreateWrapCameras : MonoBehaviour
 
 	void Update()
 	{
-		if(oldScreenWidth != Screen.width || oldScreenHeight != Screen.height)
+		if(CameraBounds.Instance.ScreenChanged)
 		{
 			LayoutCameras();
 		}
@@ -29,16 +23,6 @@ public class CreateWrapCameras : MonoBehaviour
 
 	void LayoutCameras()
 	{
-		//Save current res information
-		oldScreenWidth = Screen.width;
-		oldScreenHeight = Screen.height;
-
-		//Figure out the screen bounds
-		horizontalOffset = Camera.main.ViewportToWorldPoint(new Vector3(1.5f, 0.5f, -Camera.main.transform.position.z));
-		verticalOffset = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1.5f, -Camera.main.transform.position.z));
-		zOffset = new Vector3(0, 0, Camera.main.transform.position.z);
-		//zOffset = Camera.main.transform.position.z*Vector3.forward //Fancy pants way of doing things
-
 		//Destroy any wrap cameras (if they exist)
 		foreach(GameObject cam in GameObject.FindGameObjectsWithTag("WrapCamera"))
 		{
@@ -47,15 +31,15 @@ public class CreateWrapCameras : MonoBehaviour
 
 		//Instantiate our cameras at the proper position
 		//Side cameras
-		Instantiate(wrapCam, transform.position+horizontalOffset, wrapCam.transform.rotation);
-		Instantiate(wrapCam, transform.position-horizontalOffset, wrapCam.transform.rotation);
-		Instantiate(wrapCam, transform.position+verticalOffset, wrapCam.transform.rotation);
-		Instantiate(wrapCam, transform.position-verticalOffset, wrapCam.transform.rotation);
+		Instantiate(wrapCam, transform.position + CameraBounds.Instance.HorizontalOffset, wrapCam.transform.rotation);
+		Instantiate(wrapCam, transform.position - CameraBounds.Instance.HorizontalOffset, wrapCam.transform.rotation);
+		Instantiate(wrapCam, transform.position + CameraBounds.Instance.VerticalOffset, wrapCam.transform.rotation);
+		Instantiate(wrapCam, transform.position - CameraBounds.Instance.VerticalOffset, wrapCam.transform.rotation);
 
 		//Corner cameras
-		Instantiate(wrapCam, transform.position+horizontalOffset+verticalOffset, wrapCam.transform.rotation);
-		Instantiate(wrapCam, transform.position+horizontalOffset-verticalOffset, wrapCam.transform.rotation);
-		Instantiate(wrapCam, transform.position-horizontalOffset+verticalOffset, wrapCam.transform.rotation);
-		Instantiate(wrapCam, transform.position-horizontalOffset-verticalOffset, wrapCam.transform.rotation);
+		Instantiate(wrapCam, transform.position + CameraBounds.Instance.HorizontalOffset + CameraBounds.Instance.VerticalOffset, wrapCam.transform.rotation);
+		Instantiate(wrapCam, transform.position + CameraBounds.Instance.HorizontalOffset - CameraBounds.Instance.VerticalOffset, wrapCam.transform.rotation);
+		Instantiate(wrapCam, transform.position - CameraBounds.Instance.HorizontalOffset + CameraBounds.Instance.VerticalOffset, wrapCam.transform.rotation);
+		Instantiate(wrapCam, transform.position - CameraBounds.Instance.HorizontalOffset - CameraBounds.Instance.VerticalOffset, wrapCam.transform.rotation);
 	}
 }
