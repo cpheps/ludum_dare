@@ -22,16 +22,19 @@ public class ConfigurationValues : MonoBehaviour {
 	}
 
 	void OnMouseOver () {
+		GetComponent<TextMesh> ().color = Color.blue;
 		isMouseOver = true;
 
 	}
 
 	void OnMouseExit() {
+		GetComponent<TextMesh> ().color = Color.white;	
 		isMouseOver = false;
 	}
 
 	void Update() {
 		if (isMouseOver == true) {
+
 			foreach(KeyCode kcode in Enum.GetValues(typeof(KeyCode))) {
 				if (Input.GetKeyDown(kcode)) {
 
