@@ -34,15 +34,19 @@ public class ConfigurationValues : MonoBehaviour {
 		if (isMouseOver == true) {
 			foreach(KeyCode kcode in Enum.GetValues(typeof(KeyCode))) {
 				if (Input.GetKeyDown(kcode)) {
-					GetComponent<TextMesh>().text = kcode.ToString();
 
 					if(configKey == "coilLeft") {
-						PlayerPrefs.SetString("coilLeft",kcode.ToString());					
+						if(PlayerPrefs.GetString("coilRight") != (kcode.ToString())) {
+							PlayerPrefs.SetString("coilLeft",kcode.ToString());
+							GetComponent<TextMesh>().text = kcode.ToString();
+						}
 					}
 					if(configKey == "coilRight") {
-						PlayerPrefs.SetString("coilRight",kcode.ToString());					
+						if(!PlayerPrefs.GetString("coilLeft").Equals(kcode.ToString())) {
+							PlayerPrefs.SetString("coilRight",kcode.ToString());
+							GetComponent<TextMesh>().text = kcode.ToString();
+						}
 					}
-
 				}
 			}
 		}
