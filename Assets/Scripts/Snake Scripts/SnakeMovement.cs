@@ -40,7 +40,7 @@ public class SnakeMovement : MonoBehaviour {
 	void Start () 
 	{
 		snakeHead = transform.Find("Head");
-		InvokeRepeating("growSnake", 1, 1);
+		//InvokeRepeating("growSnake", 1, 1);
 	}
 
 	// Update is called once per frame
@@ -70,6 +70,11 @@ public class SnakeMovement : MonoBehaviour {
 	private void growSnake()
 	{
 		addSegment();
+	}
+
+	void OnTriggerEnter(Collider collider)
+	{
+		Debug.Log("Collide with: " + collider.gameObject.name);
 	}
 	#endregion
 }
