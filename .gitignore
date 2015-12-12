@@ -20,5 +20,9 @@
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
 
+#Builds
+*.app/
+
 #Remove this later
 Assets/Scenes/GameScene.unity
+
