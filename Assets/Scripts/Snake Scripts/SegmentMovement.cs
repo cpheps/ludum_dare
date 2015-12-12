@@ -24,5 +24,13 @@ public class SegmentMovement: MonoBehaviour {
 			child.transform.localRotation = transform.rotation;
 			child.transform.localPosition = new Vector3(-0.5f,0f,0f);
 		}
+		else
+		{
+			foreach(Transform child in transform)
+			{
+				SegmentMovement segmentMovement = child.GetComponent<SegmentMovement>();
+				segmentMovement.Grow();
+			}
+		}
 	}
 }

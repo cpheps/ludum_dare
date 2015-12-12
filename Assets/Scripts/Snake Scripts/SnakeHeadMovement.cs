@@ -6,10 +6,6 @@ public class SnakeHeadMovement : MonoBehaviour {
 	[SerializeField]
 	private int snakeSpeed = 7;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -18,5 +14,14 @@ public class SnakeHeadMovement : MonoBehaviour {
 		}
 
 		transform.Translate(new Vector3(1,0,0) * snakeSpeed * Time.deltaTime);
+	}
+
+	public void Grow()
+	{
+		foreach(Transform child in transform)
+		{
+			SegmentMovement segmentMovement = child.GetComponent<SegmentMovement>();
+			segmentMovement.Grow();
+		}
 	}
 }
