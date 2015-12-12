@@ -6,30 +6,45 @@ using System.IO;
 public class ConfigurationValues : MonoBehaviour {
 
 	public string configKey;
+	private Boolean isMouseOver = false;
+	private string[] lines;
+	private string originalValue;
 
 	void Start () {
-		Char[] splitChars = {'='};
-		string[] lines = File.ReadAllLines("Assets/controls.txt");
-		foreach (string s in lines)
-		{
-			if(s != null) {
-				String[] keyValue = s.Split(splitChars);
-				string key = keyValue[0];
-				string value = keyValue[1];
 
-				if(key.Equals(configKey)) {
-					GetComponent<TextMesh>().text = value;
-				}
-			}
+		if(configKey == "coilLeft") {
+			GetComponent<TextMesh>().text = PlayerPrefs.GetString ("coilLeft");
 		}
+		if(configKey == "coilRight") {
+			GetComponent<TextMesh>().text = PlayerPrefs.GetString ("coilRight");
+		}
+
 	}
 
 	void OnMouseOver () {
+		isMouseOver = true;
+
 	}
 
 	void OnMouseExit() {
+		isMouseOver = false;
 	}
 
 	void Update() {
+		if (isMouseOver == true) {
+			foreach(KeyCode kcode in Enum.GetValues(typeof(KeyCode))) {
+				if (Input.GetKeyDown(kcode)) {
+					GetComponent<TextMesh>().text = kcode.ToString();
+
+					if(configKey == "coilLeft") {
+						PlayerPrefs.SetString("coilLeft",kcode.ToString());					
+					}
+					if(configKey == "coilRight") {
+						PlayerPrefs.SetString("coilRight",kcode.ToString());					
+					}
+
+				}
+			}
+		}
 	}
 }
