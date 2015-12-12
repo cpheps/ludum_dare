@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ConfigurationValues : MonoBehaviour {
 	void Start () {
-		this.GetComponentInChildren<TextMesh>().text = Input.GetButton("Coil").;
+//		this.GetComponentInChildren<TextMesh>().text = Input.GetButton("Coil");
 
 	}
 	
