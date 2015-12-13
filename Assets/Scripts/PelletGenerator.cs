@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PelletGenerator : MonoBehaviour {
 
@@ -25,15 +27,16 @@ public class PelletGenerator : MonoBehaviour {
 	/// Time of Round in Seconds
 	/// </summary>
 	[SerializeField]
-	private int totalTimeOfRound = 120;
+	private int totalTimeOfRound = 30;
 
 	[SerializeField]
 	private int timeLeftInRound;
 
 	void Update() {
+		//End round shouldn't really be run from here.
 		if (timeLeftInRound == 0) {
-			//end game
 			startTime = false;
+			Application.LoadLevel(Application.loadedLevel);
 		}
 
 		//Kind of hacky -- should fix

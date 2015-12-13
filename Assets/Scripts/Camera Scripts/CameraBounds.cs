@@ -73,8 +73,7 @@ public class CameraBounds : MonoBehaviour {
 		if (Instance == null)
 		{
 			Instance = this;
-			DontDestroyOnLoad(this);
-
+			//DontDestroyOnLoad(this);
 			getScreenBounds();
 		}
 		else if (Instance != null)
