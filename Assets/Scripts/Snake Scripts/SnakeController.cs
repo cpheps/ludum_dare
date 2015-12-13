@@ -9,6 +9,12 @@ public class SnakeController : MonoBehaviour {
 	public bool playerControlled = true;
 	public bool turnRight = false;
 	public bool turnLeft = false;
+<<<<<<< HEAD:Assets/SnakeController.cs
+		
+	void Start () {
+		segments.Add (transform.Find("Head").gameObject);
+		InvokeRepeating ("Move", .030f, .030f);
+=======
 
 	public void gameStart()
 	{
@@ -35,6 +41,7 @@ public class SnakeController : MonoBehaviour {
 		segments.Add (head);
 
 //		InvokeRepeating ("AddSegment", 1, 1);
+>>>>>>> aebd9f377b803fe4696619954799291c3399f85b:Assets/Scripts/Snake Scripts/SnakeController.cs
 	}
 
 	void Update () {
@@ -47,14 +54,14 @@ public class SnakeController : MonoBehaviour {
 	void Move() {
 		for(int i = segments.Count; i > 1; --i)
 		{
-			segments[i-1].transform.position = segments[i-2].transform.position;
+			segments[i-1].transform.localPosition = segments[i-2].transform.localPosition;
 			segments[i-1].transform.rotation = segments[i-2].transform.rotation;
 		}
-		segments[0].transform.Translate(Vector3.forward * 7 * Time.deltaTime);
+		segments[0].transform.Translate(new Vector3(10,0,0) * 1 * Time.deltaTime);
 		if (turnLeft) {
-			segments [0].transform.localRotation *= Quaternion.Euler(Vector3.up * 5);
+			segments [0].transform.localRotation *= Quaternion.Euler(Vector3.forward * 5);
 		} else if (turnRight) {
-			segments [0].transform.localRotation *= Quaternion.Euler (Vector3.up * -5);
+			segments [0].transform.localRotation *= Quaternion.Euler (Vector3.forward * -5);
 		}
 	}
 
@@ -63,7 +70,7 @@ public class SnakeController : MonoBehaviour {
 		GameObject g = (GameObject)GameObject.Instantiate (segment, new Vector3(-50, -50, -50), transform.rotation);
 		g.GetComponent<Renderer>().material.color = playerColor;
 		g.transform.parent = this.transform;
-		g.transform.localPosition += new Vector3 (-0.5f, 0, 0);
+		g.transform.localPosition = predecessor.transform.localPosition + new Vector3 (-1f, 0, 0);
 		g.name = "Segment";
 		segments.Add (g);
 	}
