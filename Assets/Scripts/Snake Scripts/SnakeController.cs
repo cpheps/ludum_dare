@@ -75,9 +75,9 @@ public class SnakeController : MonoBehaviour {
     public void removeAllSegmentsAfter(Dictionary<string, GameObject> hitSegmentandAttackingSnake )
     {
 		int segmentIndex = segments.IndexOf( hitSegmentandAttackingSnake["attackedSnake"]);
-		int decreaseScoreBy = segments.Count - segmentIndex;
-		ScoreKeeper.Instance.decreaseScore(hitSegmentandAttackingSnake["attackedSnake"].transform.parent.gameObject.name.ToString(), decreaseScoreBy);
-		ScoreKeeper.Instance.increaseScore (hitSegmentandAttackingSnake ["attackingSnake"].name.ToString (), decreaseScoreBy);
+		int changeInScore = segments.Count - segmentIndex;
+		ScoreKeeper.Instance.decreaseScore(hitSegmentandAttackingSnake["attackedSnake"].transform.parent.gameObject.name.ToString(), changeInScore - changeInScore/2);
+		ScoreKeeper.Instance.increaseScore (hitSegmentandAttackingSnake ["attackingSnake"].name.ToString (), changeInScore - changeInScore/2);
 
         for (int removeIndex = segmentIndex; removeIndex < segments.Count; ++removeIndex )
         {
