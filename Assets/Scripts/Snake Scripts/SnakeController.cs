@@ -71,4 +71,16 @@ public class SnakeController : MonoBehaviour {
         g.name = "Segment" + segments.Count;
         segments.Add (g);
     }
+
+    public void removeAllSegmentsAfter(GameObject hitSegment)
+    {
+        int segmentIndex = segments.IndexOf( hitSegment );
+
+        for (int removeIndex = segmentIndex; removeIndex < segments.Count; ++removeIndex )
+        {
+            Destroy( segments[removeIndex] );
+        }
+
+        segments.RemoveRange( segmentIndex, segments.Count - segmentIndex );
+    }
 }
