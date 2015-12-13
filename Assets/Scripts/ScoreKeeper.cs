@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public sealed class ScoreKeeper : MonoBehaviour {
-	private int playerOneScore = 0;
-	private int playerTwoScore = 0;
-	private int playerThreeScore = 0;
-	private int playerFourScore = 0;
+	Dictionary<string, int> scores = new Dictionary<string, int>{
+		{"Player1", 0},
+		{"Player2", 0},
+		{"Player3", 0},
+		{"Player4", 0}
+	};
 		
 	public static ScoreKeeper Instance { get; private set; }
 
@@ -21,60 +23,27 @@ public sealed class ScoreKeeper : MonoBehaviour {
 	}
 
 	public int getScore(string player){
-		if(player.Equals("Player1")){
-			return playerOneScore;
-		} 
-		else if (player.Equals("Player2")){
-			return playerTwoScore;
-		}
-		else if (player.Equals("Player3")){
-			return playerThreeScore;
-		} 
-		else if (player.Equals ("Player4")){
-			return playerFourScore;
-		}
-		return -1;
+		return scores [player];
 	}
 
 
 	public int[] getAllScores() {
-		return new int[] {playerOneScore, playerTwoScore, playerThreeScore, playerFourScore};
+		return new int[]{scores ["Player1"], scores ["Player2"], scores ["Player3"], scores ["Player4"]};
 	}
 
 	public void increaseScore(string player, int amount){
-		if(player.Equals("Player1")){
-			playerOneScore += amount;
-		} 
-		else if (player.Equals("Player2")){
-			playerTwoScore += amount;
-		}
-		else if (player.Equals("Player3")){
-			playerThreeScore += amount;
-		} 
-		else if (player.Equals ("Player4")){
-			playerFourScore += amount;
-		}
+		scores [player] += amount;
 	}
 
 	public void decreaseScore(string player, int amount){
-		if(player.Equals("Player1")){
-			playerOneScore -= amount;
-		} 
-		else if (player.Equals("Player2")){
-			playerTwoScore -= amount;
-		}
-		else if (player.Equals("Player3")){
-			playerThreeScore -= amount;
-		} 
-		else if (player.Equals ("Player4")){
-			playerFourScore -= amount;
-		}
+
+		scores [player] -= amount;
 	}
 
 	public void resetScores(){
-		playerOneScore = 0;
-		playerTwoScore = 0;
-		playerThreeScore = 0;
-		playerFourScore = 0;
+		scores ["Player1"] = 0;
+		scores ["Player2"] = 0;
+		scores ["Player3"] = 0;
+		scores ["Player4"] = 0;
 	}
 }
