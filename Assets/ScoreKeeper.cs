@@ -20,22 +20,33 @@ public sealed class ScoreKeeper : MonoBehaviour {
 		}
 	}
 
-	public int getScore(){
-		return playerOneScore;
+	public int getScore(string player){
+		switch(player){
+		case "player1":
+			return playerOneScore;
+		case "player2":
+			return playerTwoScore;
+		case "player3":
+			return playerThreeScore;
+		case "player4":
+			return playerFourScore;
+		default:
+			return -1;
+		}
 	}
 
-	public void increaseScore(int player, int amount){
+	public void increaseScore(string player, int amount){
 		switch(player){
-		case 1:
+		case "player1":
 			playerOneScore += amount;
 			break;
-		case 2:
+		case "player2":
 			playerTwoScore += amount;
 			break;
-		case 3:
+		case "player3":
 			playerThreeScore += amount;
 			break;
-		case 4:
+		case "player4":
 			playerFourScore += amount;
 			break;
 		default:
@@ -43,18 +54,18 @@ public sealed class ScoreKeeper : MonoBehaviour {
 		}
 	}
 
-	public void decreaseScore(int player, int amount){
+	public void decreaseScore(string player, int amount){
 		switch(player){
-		case 1:
+		case "player1":
 			playerOneScore -= amount;
 			break;
-		case 2:
+		case "player2":
 			playerTwoScore -= amount;
 			break;
-		case 3:
+		case "player3":
 			playerThreeScore -= amount;
 			break;
-		case 4:
+		case "player4":
 			playerFourScore -= amount;
 			break;
 		default:
@@ -62,7 +73,7 @@ public sealed class ScoreKeeper : MonoBehaviour {
 		}
 	}
 
-	public void resetScores(int player, int amount){
+	public void resetScores(){
 		playerOneScore = 0;
 		playerTwoScore = 0;
 		playerThreeScore = 0;
