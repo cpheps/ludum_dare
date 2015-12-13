@@ -3,6 +3,11 @@ using System.Collections;
 
 public class PelletGenerator : MonoBehaviour {
 
+	public void gameStart()
+	{
+		StartCoroutine(createPellet());
+	}
+
 	[SerializeField]
 	private GameObject pelletTemplate = null;
 
@@ -21,16 +26,10 @@ public class PelletGenerator : MonoBehaviour {
 	[SerializeField]
 	private int timeLeftInRound = 0;
 
-	// Use this for initialization
-	void Start () 
-	{
-		StartCoroutine(createPellet());
-	}
-
 	void Update() {
 		timeLeftInRound = totalTimeOfRound - (int)Time.timeSinceLevelLoad;
 	}
-
+	
 	private IEnumerator createPellet()
 	{
 		while (Time.time < totalTimeOfRound/2) {
