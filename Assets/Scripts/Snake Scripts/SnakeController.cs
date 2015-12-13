@@ -9,12 +9,6 @@ public class SnakeController : MonoBehaviour {
 	public bool playerControlled = true;
 	public bool turnRight = false;
 	public bool turnLeft = false;
-<<<<<<< HEAD:Assets/SnakeController.cs
-		
-	void Start () {
-		segments.Add (transform.Find("Head").gameObject);
-		InvokeRepeating ("Move", .030f, .030f);
-=======
 
 	public void gameStart()
 	{
@@ -41,7 +35,6 @@ public class SnakeController : MonoBehaviour {
 		segments.Add (head);
 
 //		InvokeRepeating ("AddSegment", 1, 1);
->>>>>>> aebd9f377b803fe4696619954799291c3399f85b:Assets/Scripts/Snake Scripts/SnakeController.cs
 	}
 
 	void Update () {
