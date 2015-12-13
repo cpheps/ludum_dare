@@ -28,7 +28,7 @@ public class GameLoadScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        if (currentRound >= totalRounds) {
+		if (currentRound >= totalRounds) {
             Application.LoadLevel ("MainMenu");
             resetRounds();
         } else {
@@ -52,7 +52,6 @@ public class GameLoadScript : MonoBehaviour {
     }
 
     void Update() {
-        //End round shouldn't really be run from here.
         if (timeLeftInRound == 0) {
             startTime = false;
             Application.LoadLevel(Application.loadedLevel);
@@ -63,6 +62,13 @@ public class GameLoadScript : MonoBehaviour {
             timeLeftInRound = totalTimeOfRound - (int)Time.timeSinceLevelLoad+3;
             GameObject.FindGameObjectWithTag("Time").GetComponent<Text>().text = ""+timeLeftInRound;
         }
+
+		//Update Score Panel of HUD
+		int[] scores = ScoreKeeper.Instance.getAllScores ();
+		GameObject.FindGameObjectWithTag ("P1Score").GetComponent<Text> ().text = "" + scores [0];
+		GameObject.FindGameObjectWithTag ("P2Score").GetComponent<Text> ().text = "" + scores [1];
+		GameObject.FindGameObjectWithTag ("P3Score").GetComponent<Text> ().text = "" + scores [2];
+		GameObject.FindGameObjectWithTag ("P4Score").GetComponent<Text> ().text = "" + scores [3];
     }
 
     private IEnumerator startCountDown()

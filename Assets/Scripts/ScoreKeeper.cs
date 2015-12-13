@@ -35,7 +35,12 @@ public sealed class ScoreKeeper : MonoBehaviour {
 		}
 	}
 
-	public void increaseScore(string player, int amount){
+
+	public int[] getAllScores() {
+		return new int[] {playerOneScore, playerTwoScore, playerThreeScore, playerFourScore};
+	}
+
+	public void increaseScore(int player, int amount){
 		switch(player){
 		case "player1":
 			playerOneScore += amount;
