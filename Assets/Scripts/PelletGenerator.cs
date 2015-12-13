@@ -1,17 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 
 public class PelletGenerator : MonoBehaviour {
-
-	private bool startTime = false;
-
-	public void gameStart()
+	public void gameStart(int totalTimeOfRound)
 	{
-		StartCoroutine(createPellet());
-		startTime = true;
+		StartCoroutine(createPellet(totalTimeOfRound));
 	}
 
 	[SerializeField]
@@ -23,52 +16,29 @@ public class PelletGenerator : MonoBehaviour {
 	[SerializeField]
 	private float initialPelletCreationInterval = 2f;
 
-	/// <summary>
-	/// Time of Round in Seconds
-	/// </summary>
-	[SerializeField]
-	private int totalTimeOfRound = 30;
-
-	[SerializeField]
-	private int timeLeftInRound;
-
-	void Update() {
-		//End round shouldn't really be run from here.
-		if (timeLeftInRound == 0) {
-			startTime = false;
-			Application.LoadLevel(Application.loadedLevel);
-		}
-
-		//Kind of hacky -- should fix
-		if (startTime == true) {
-			timeLeftInRound = totalTimeOfRound - (int)Time.timeSinceLevelLoad+3;
-			GameObject.FindGameObjectWithTag("Time").GetComponent<Text>().text = ""+timeLeftInRound;
-		}
-
-	}
-
-	private IEnumerator createPellet()
+	private IEnumerator createPellet(int totalTimeOfRound)
 	{
-		while (Time.time < totalTimeOfRound/2) {
+		float startTime = Time.time;
+
+		while ((Time.time - startTime) < totalTimeOfRound/2) {
 			yield return new WaitForSeconds(initialPelletCreationInterval);
 			generateRandomPellet();
 		}
-		while (Time.time > totalTimeOfRound/2 && Time.time <= totalTimeOfRound*3/4) {
+		while ((Time.time - startTime) > totalTimeOfRound/2 && (Time.time - startTime) <= totalTimeOfRound*3/4) {
 			yield return new WaitForSeconds(initialPelletCreationInterval/2);
 			generateRandomPellet();
 		}
-		while (Time.time > totalTimeOfRound*3/4 && Time.time <= totalTimeOfRound*5/6) {
+		while ((Time.time - startTime) > totalTimeOfRound*3/4 && (Time.time - startTime) <= totalTimeOfRound*5/6) {
 			yield return new WaitForSeconds(initialPelletCreationInterval/4);
 			generateRandomPellet();
 		}
-		while (Time.time > totalTimeOfRound*5/6 && Time.time <= totalTimeOfRound) {
+		while ((Time.time - startTime) > totalTimeOfRound*5/6 && (Time.time - startTime) <= totalTimeOfRound) {
 			yield return new WaitForSeconds(initialPelletCreationInterval/8);
 			generateRandomPellet();
 		}
 	}
 
 	private void generateRandomPellet(){
-		
 		bool pointFound = false;
 		
 		while (!pointFound)
