@@ -44,6 +44,7 @@ public class GameLoadScript : MonoBehaviour {
             newSnake.name = "Player" + count;
             SnakeController snakeController = newSnake.GetComponent<SnakeController>();
             snakeController.PlayerColor = playerColors[count - 1];
+            snakeController.playerControlled = (count == 1);
             createdSnakes.Add(newSnake);
 
         }

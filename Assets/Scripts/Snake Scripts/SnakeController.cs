@@ -34,7 +34,7 @@ public class SnakeController : MonoBehaviour {
 
         segments.Add (head);
 
-        //InvokeRepeating ("AddSegment", 1, 2);
+        //InvokeRepeating( "AddSegment", 1, 2 );
     }
 
     void Update () {
@@ -42,16 +42,13 @@ public class SnakeController : MonoBehaviour {
             turnRight = Input.GetKey (KeyCode.S);
             turnLeft = Input.GetKey (KeyCode.A);
         }
-
-        Debug.DrawRay( segments[0].transform.position, segments[0].transform.right * 2, Color.red );
-        Debug.DrawRay( segments[0].transform.position, segments[0].transform.up * 2, Color.green );
-        Debug.DrawRay( segments[0].transform.position, segments[0].transform.forward * 2, Color.blue );
     }
 
     void Move() {
         for(int i = segments.Count; i > 1; --i)
         {
-            segments[i - 1].transform.position = segments[i - 2].transform.position - segments[i - 2].transform.forward;
+            float offSet = i == 2 ? 2 : 1.5f;
+            segments[i - 1].transform.position = segments[i - 2].transform.position - segments[i - 2].transform.forward * offSet;
             segments[i-1].transform.rotation = segments[i-2].transform.rotation;
         }
         segments[0].transform.Translate(Vector3.forward * 10 * Time.deltaTime);
@@ -68,8 +65,22 @@ public class SnakeController : MonoBehaviour {
         GameObject g = (GameObject)GameObject.Instantiate (segment, new Vector3(-50, -50, -50), predecessor.transform.rotation);
         g.GetComponent<Renderer>().material.color = playerColor;
         g.transform.parent = this.transform;
-        g.transform.position = predecessor.transform.position - predecessor.transform.forward;
-        g.name = "Segment";
+
+        float offSet = segments.Count == 1 ? 2 : 1.5f;
+        g.transform.position = predecessor.transform.position - predecessor.transform.forward * offSet;
+        g.name = "Segment" + segments.Count;
         segments.Add (g);
+    }
+
+    public void removeAllSegmentsAfter(GameObject hitSegment)
+    {
+        int segmentIndex = segments.IndexOf( hitSegment );
+
+        for (int removeIndex = segmentIndex; removeIndex < segments.Count; ++removeIndex )
+        {
+            Destroy( segments[removeIndex] );
+        }
+
+        segments.RemoveRange( segmentIndex, segments.Count - segmentIndex );
     }
 }
