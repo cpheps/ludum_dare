@@ -4,80 +4,80 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GameLoadScript : MonoBehaviour {
-	private bool startTime = false;
+    private bool startTime = false;
 
-	static public int totalRounds = 3;
-	static public int currentRound = 0;
+    static public int totalRounds = 3;
+    static public int currentRound = 0;
 
-	[SerializeField]
-	private Color32[] playerColors;
+    [SerializeField]
+    private Color32[] playerColors;
 
-	[SerializeField]
-	private GameObject pelletGenerator;
+    [SerializeField]
+    private GameObject pelletGenerator;
 
-	[SerializeField]
-	private GameObject snake;
+    [SerializeField]
+    private GameObject snake;
 
-	[SerializeField]
-	private int totalTimeOfRound = 120;
-	
-	[SerializeField]
-	private int timeLeftInRound;
+    [SerializeField]
+    private int totalTimeOfRound = 120;
+    
+    [SerializeField]
+    private int timeLeftInRound;
 
-	private List<GameObject> createdSnakes = new List<GameObject>();
+    private List<GameObject> createdSnakes = new List<GameObject>();
 
-	// Use this for initialization
-	void Start () {
-		if (currentRound >= totalRounds) {
-			Application.LoadLevel ("MainMenu");
-			resetRounds();
-		} else {
-			currentRound = currentRound + 1;
-			GameObject.FindGameObjectWithTag("Rounds").GetComponent<Text>().text = "Round " + currentRound + "/" + totalRounds;
-		}
+    // Use this for initialization
+    void Start () {
+        if (currentRound >= totalRounds) {
+            Application.LoadLevel ("MainMenu");
+            resetRounds();
+        } else {
+            currentRound = currentRound + 1;
+            GameObject.FindGameObjectWithTag("Rounds").GetComponent<Text>().text = "Round " + currentRound + "/" + totalRounds;
+        }
 
-		
-		for (int count = 1; count <= 4; ++count)
-		{
-			int multiplier = count * (count % 2 == 0 ? 2 : -2 );
-			GameObject newSnake = GameObject.Instantiate(snake, new Vector3(multiplier, 0, 0), Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
+        
+        for (int count = 1; count <= 4; ++count)
+        {
+            int multiplier = count * (count % 2 == 0 ? 2 : -2 );
+            GameObject newSnake = GameObject.Instantiate(snake, new Vector3(multiplier, 0, 0), Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
+            newSnake.name = "Player" + count;
+            SnakeController snakeController = newSnake.GetComponent<SnakeController>();
+            snakeController.PlayerColor = playerColors[count - 1];
+            createdSnakes.Add(newSnake);
 
-			SnakeController snakeController = newSnake.GetComponent<SnakeController>();
-			snakeController.PlayerColor = playerColors[count - 1];
-			createdSnakes.Add(newSnake);
+        }
+        StartCoroutine(startCountDown());
+    }
 
-		}
-		StartCoroutine(startCountDown());
-	}
+    void Update() {
+        //End round shouldn't really be run from here.
+        if (timeLeftInRound == 0) {
+            startTime = false;
+            Application.LoadLevel(Application.loadedLevel);
+        }
+        
+        //Kind of hacky -- should fix
+        if (startTime == true) {
+            timeLeftInRound = totalTimeOfRound - (int)Time.timeSinceLevelLoad+3;
+            GameObject.FindGameObjectWithTag("Time").GetComponent<Text>().text = ""+timeLeftInRound;
+        }
+    }
 
-	void Update() {
-		//End round shouldn't really be run from here.
-		if (timeLeftInRound == 0) {
-			startTime = false;
-			Application.LoadLevel(Application.loadedLevel);
-		}
-		
-		//Kind of hacky -- should fix
-		if (startTime == true) {
-			timeLeftInRound = totalTimeOfRound - (int)Time.timeSinceLevelLoad+3;
-			GameObject.FindGameObjectWithTag("Time").GetComponent<Text>().text = ""+timeLeftInRound;
-		}
-	}
+    private IEnumerator startCountDown()
+    {
+        yield return new WaitForSeconds(3);
+        pelletGenerator.transform.SendMessage("gameStart", totalTimeOfRound);
 
-	private IEnumerator startCountDown()
-	{
-		yield return new WaitForSeconds(3);
-		pelletGenerator.transform.SendMessage("gameStart", totalTimeOfRound);
+        foreach (GameObject snake in createdSnakes)
+        {
+            snake.transform.SendMessage("gameStart");
+        }
+        
+        startTime = true;
+    }
 
-		foreach (GameObject snake in createdSnakes)
-		{
-			snake.transform.SendMessage("gameStart");
-		}
-		
-		startTime = true;
-	}
-
-	public void resetRounds() {
-		currentRound = 0;
-	}
+    public void resetRounds() {
+        currentRound = 0;
+    }
 }
