@@ -10,10 +10,7 @@ public class SnakeController : MonoBehaviour {
 	public bool turnLeft = false;
 		
 	void Start () {
-		GameObject g = (GameObject) GameObject.Instantiate (segment, transform.position, transform.rotation);
-		g.name = "Head";
-		g.transform.parent = this.transform;
-		segments.Add (g);
+		segments.Add (transform.Find("Head").gameObject);
 		InvokeRepeating ("Move", .020f, .020f);
 		InvokeRepeating ("AddSegment", 1, 1);
 	}
@@ -31,17 +28,17 @@ public class SnakeController : MonoBehaviour {
 			segments[i-1].transform.position = segments[i-2].transform.position;
 			segments[i-1].transform.rotation = segments[i-2].transform.rotation;
 		}
-		segments[0].transform.Translate(new Vector3(1,0,0) * 7 * Time.deltaTime);
+		segments[0].transform.Translate(Vector3.forward * 7 * Time.deltaTime);
 		if (turnLeft) {
-			segments [0].transform.localRotation *= Quaternion.Euler (0, 0, 5);
+			segments [0].transform.localRotation *= Quaternion.Euler(Vector3.up * 5);
 		} else if (turnRight) {
-			segments [0].transform.localRotation *= Quaternion.Euler (0, 0, -5);
+			segments [0].transform.localRotation *= Quaternion.Euler (Vector3.up * -5);
 		}
 	}
 
 	public void AddSegment(){
 		GameObject predecessor = segments [segments.Count - 1];
-		GameObject g = (GameObject)GameObject.Instantiate (segment, new Vector3(50, 50, 50), transform.rotation);
+		GameObject g = (GameObject)GameObject.Instantiate (segment, new Vector3(-50, -50, -50), transform.rotation);
 		g.transform.parent = this.transform;
 		g.transform.localPosition += new Vector3 (-0.5f, 0, 0);
 		g.name = "Segment";

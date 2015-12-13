@@ -7,8 +7,7 @@ public class Pellet : MonoBehaviour {
 	{
 		if (collider.tag == "Snake Head")
 		{
-			SnakeHeadMovement snakeHeadMovement = collider.transform.GetComponent<SnakeHeadMovement>();
-			snakeHeadMovement.Grow();
+			collider.transform.SendMessage("AddSegment");
 			Destroy(gameObject);
 		}
 	}
