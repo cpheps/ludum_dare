@@ -21,18 +21,19 @@ public sealed class ScoreKeeper : MonoBehaviour {
 	}
 
 	public int getScore(string player){
-		switch(player){
-		case "player1":
+		if(player.Equals("Player1")){
 			return playerOneScore;
-		case "player2":
+		} 
+		else if (player.Equals("Player2")){
 			return playerTwoScore;
-		case "player3":
-			return playerThreeScore;
-		case "player4":
-			return playerFourScore;
-		default:
-			return -1;
 		}
+		else if (player.Equals("Player3")){
+			return playerThreeScore;
+		} 
+		else if (player.Equals ("Player4")){
+			return playerFourScore;
+		}
+		return -1;
 	}
 
 
@@ -40,41 +41,33 @@ public sealed class ScoreKeeper : MonoBehaviour {
 		return new int[] {playerOneScore, playerTwoScore, playerThreeScore, playerFourScore};
 	}
 
-	public void increaseScore(int player, int amount){
-		switch(player){
-		case "player1":
+	public void increaseScore(string player, int amount){
+		if(player.Equals("Player1")){
 			playerOneScore += amount;
-			break;
-		case "player2":
+		} 
+		else if (player.Equals("Player2")){
 			playerTwoScore += amount;
-			break;
-		case "player3":
+		}
+		else if (player.Equals("Player3")){
 			playerThreeScore += amount;
-			break;
-		case "player4":
+		} 
+		else if (player.Equals ("Player4")){
 			playerFourScore += amount;
-			break;
-		default:
-			break;
 		}
 	}
 
 	public void decreaseScore(string player, int amount){
-		switch(player){
-		case "player1":
+		if(player.Equals("Player1")){
 			playerOneScore -= amount;
-			break;
-		case "player2":
+		} 
+		else if (player.Equals("Player2")){
 			playerTwoScore -= amount;
-			break;
-		case "player3":
+		}
+		else if (player.Equals("Player3")){
 			playerThreeScore -= amount;
-			break;
-		case "player4":
+		} 
+		else if (player.Equals ("Player4")){
 			playerFourScore -= amount;
-			break;
-		default:
-			break;
 		}
 	}
 
