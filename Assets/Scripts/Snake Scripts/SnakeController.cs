@@ -34,7 +34,7 @@ public class SnakeController : MonoBehaviour {
 
         segments.Add (head);
 
-        InvokeRepeating( "AddSegment", 1, 2 );
+        //InvokeRepeating( "AddSegment", 1, 2 );
     }
 
     void Update () {
