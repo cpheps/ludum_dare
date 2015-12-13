@@ -12,7 +12,7 @@ public class SnakeController : MonoBehaviour {
 	void Start () {
 		segments.Add (transform.Find("Head").gameObject);
 		InvokeRepeating ("Move", .020f, .020f);
-//		InvokeRepeating ("AddSegment", 1, 1);
+		InvokeRepeating ("AddSegment", 1, 1);
 	}
 
 	void Update () {
