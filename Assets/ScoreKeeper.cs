@@ -10,7 +10,7 @@ public sealed class ScoreKeeper : MonoBehaviour {
 		
 	public static ScoreKeeper Instance { get; private set; }
 
-	void onAwake()
+	void Awake()
 	{
 		if (Instance == null) {
 			Instance = this;

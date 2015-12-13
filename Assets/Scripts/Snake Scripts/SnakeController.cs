@@ -50,11 +50,11 @@ public class SnakeController : MonoBehaviour {
 			segments[i-1].transform.localPosition = segments[i-2].transform.localPosition;
 			segments[i-1].transform.rotation = segments[i-2].transform.rotation;
 		}
-		segments[0].transform.Translate(new Vector3(10,0,0) * 1 * Time.deltaTime);
+		segments[0].transform.Translate(Vector3.forward * 10 * Time.deltaTime);
 		if (turnLeft) {
-			segments [0].transform.localRotation *= Quaternion.Euler(Vector3.forward * 5);
+			segments [0].transform.localRotation *= Quaternion.Euler(Vector3.up * 5);
 		} else if (turnRight) {
-			segments [0].transform.localRotation *= Quaternion.Euler (Vector3.forward * -5);
+			segments [0].transform.localRotation *= Quaternion.Euler (Vector3.up * -5);
 		}
 	}
 
