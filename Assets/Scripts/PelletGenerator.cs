@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PelletGenerator : MonoBehaviour {
+
+	private bool startTime = false;
 
 	public void gameStart()
 	{
 		StartCoroutine(createPellet());
+		startTime = true;
 	}
 
 	[SerializeField]
@@ -24,12 +28,22 @@ public class PelletGenerator : MonoBehaviour {
 	private int totalTimeOfRound = 120;
 
 	[SerializeField]
-	private int timeLeftInRound = 0;
+	private int timeLeftInRound;
 
 	void Update() {
-		timeLeftInRound = totalTimeOfRound - (int)Time.timeSinceLevelLoad;
+		if (timeLeftInRound == 0) {
+			//end game
+			startTime = false;
+		}
+
+		//Kind of hacky -- should fix
+		if (startTime == true) {
+			timeLeftInRound = totalTimeOfRound - (int)Time.timeSinceLevelLoad+3;
+			GameObject.FindGameObjectWithTag("Time").GetComponent<Text>().text = ""+timeLeftInRound;
+		}
+
 	}
-	
+
 	private IEnumerator createPellet()
 	{
 		while (Time.time < totalTimeOfRound/2) {
