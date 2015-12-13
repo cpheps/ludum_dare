@@ -9,6 +9,8 @@ public class Pellet : MonoBehaviour {
 		{
 			collider.transform.SendMessageUpwards("AddSegment");
 			Destroy(gameObject);
+			//TODO when we have multiple players, pass correct player as first var
+			ScoreKeeper.Instance.increaseScore(1,1);
 		}
 	}
 }
