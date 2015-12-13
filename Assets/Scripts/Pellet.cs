@@ -7,7 +7,7 @@ public class Pellet : MonoBehaviour {
 	{
 		if (collider.tag == "Snake Head")
 		{
-			collider.transform.SendMessage("AddSegment");
+			collider.transform.SendMessageUpwards("AddSegment");
 			Destroy(gameObject);
 		}
 	}
