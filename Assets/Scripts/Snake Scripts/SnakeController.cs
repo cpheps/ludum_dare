@@ -3,16 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SnakeController : MonoBehaviour {
+	private Color32 playerColor = Color.black;
 	private List<GameObject> segments = new List<GameObject>();
 	public GameObject segment;
 	public bool playerControlled = true;
 	public bool turnRight = false;
 	public bool turnLeft = false;
-		
-	void Start () {
-		segments.Add (transform.Find("Head").gameObject);
+
+	public void gameStart()
+	{
 		InvokeRepeating ("Move", .020f, .020f);
-		InvokeRepeating ("AddSegment", 1, 1);
+	}
+
+	public Color32 PlayerColor
+	{
+		set
+		{
+			playerColor = value;
+			for (int segmentIndex = 0; segmentIndex < segments.Count; ++segmentIndex)
+			{
+				segments[segmentIndex].GetComponent<Renderer>().material.color = playerColor;
+			}
+		}
+	}
+
+	void Start () {
+		GameObject head = transform.Find("Head").gameObject;
+
+		head.GetComponent<Renderer>().material.color = playerColor;
+
+		segments.Add (head);
+
+//		InvokeRepeating ("AddSegment", 1, 1);
 	}
 
 	void Update () {
@@ -39,6 +61,7 @@ public class SnakeController : MonoBehaviour {
 	public void AddSegment(){
 		GameObject predecessor = segments [segments.Count - 1];
 		GameObject g = (GameObject)GameObject.Instantiate (segment, new Vector3(-50, -50, -50), transform.rotation);
+		g.GetComponent<Renderer>().material.color = playerColor;
 		g.transform.parent = this.transform;
 		g.transform.localPosition += new Vector3 (-0.5f, 0, 0);
 		g.name = "Segment";
