@@ -39,8 +39,9 @@ public class SnakeController : MonoBehaviour {
 
     void Update () {
         if (playerControlled) {
-            turnRight = Input.GetKey (KeyCode.S);
-            turnLeft = Input.GetKey (KeyCode.A);
+
+			turnRight = Input.GetKey ((KeyCode) System.Enum.Parse(typeof(KeyCode),(PlayerPrefs.GetString("coilRight"))));
+			turnLeft = Input.GetKey ((KeyCode) System.Enum.Parse(typeof(KeyCode),(PlayerPrefs.GetString("coilLeft"))));
         }
     }
 
