@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public sealed class ScoreKeeper : MonoBehaviour {
-	private int playerOneScore = 0;
-	private int playerTwoScore = 0;
-	private int playerThreeScore = 0;
-	private int playerFourScore = 0;
+	Dictionary<string, int> scores = new Dictionary<string, int>{
+		{"Player1", 0},
+		{"Player2", 0},
+		{"Player3", 0},
+		{"Player4", 0}
+	};
 		
 	public static ScoreKeeper Instance { get; private set; }
 
@@ -20,56 +22,28 @@ public sealed class ScoreKeeper : MonoBehaviour {
 		}
 	}
 
-	public int getScore(){
-		return playerOneScore;
+	public int getScore(string player){
+		return scores [player];
 	}
+
 
 	public int[] getAllScores() {
-		return new int[] {playerOneScore, playerTwoScore, playerThreeScore, playerFourScore};
+		return new int[]{scores ["Player1"], scores ["Player2"], scores ["Player3"], scores ["Player4"]};
 	}
 
-	public void increaseScore(int player, int amount){
-		switch(player){
-		case 1:
-			playerOneScore += amount;
-			break;
-		case 2:
-			playerTwoScore += amount;
-			break;
-		case 3:
-			playerThreeScore += amount;
-			break;
-		case 4:
-			playerFourScore += amount;
-			break;
-		default:
-			break;
-		}
+	public void increaseScore(string player, int amount){
+		scores [player] += amount;
 	}
 
-	public void decreaseScore(int player, int amount){
-		switch(player){
-		case 1:
-			playerOneScore -= amount;
-			break;
-		case 2:
-			playerTwoScore -= amount;
-			break;
-		case 3:
-			playerThreeScore -= amount;
-			break;
-		case 4:
-			playerFourScore -= amount;
-			break;
-		default:
-			break;
-		}
+	public void decreaseScore(string player, int amount){
+
+		scores [player] -= amount;
 	}
 
-	public void resetScores(int player, int amount){
-		playerOneScore = 0;
-		playerTwoScore = 0;
-		playerThreeScore = 0;
-		playerFourScore = 0;
+	public void resetScores(){
+		scores ["Player1"] = 0;
+		scores ["Player2"] = 0;
+		scores ["Player3"] = 0;
+		scores ["Player4"] = 0;
 	}
 }

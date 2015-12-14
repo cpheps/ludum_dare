@@ -8,9 +8,9 @@ public class Pellet : MonoBehaviour {
 		if (collider.tag == "Snake Head")
 		{
 			collider.transform.SendMessageUpwards("AddSegment");
-			//TODO when we have multiple players, pass correct player as first var
-			ScoreKeeper.Instance.increaseScore(1,1);
 			Destroy(gameObject);
+			//add a point to the player that collides with the pellet
+			ScoreKeeper.Instance.increaseScore(collider.transform.parent.gameObject.name.ToString(), 1);
 		}
 	}
 }
